@@ -19,7 +19,7 @@ jobs:
 
       - name: Build Images
         run: |
-          docker-compose -f docker-compose-build.yaml up -d --build
+          docker compose -f docker-compose-build.yaml up -d --build
 
       - name: Tag Images
         if: github.event_name == 'push'
