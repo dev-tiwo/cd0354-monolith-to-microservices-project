@@ -26,7 +26,7 @@ jobs:
         run: |
           docker tag udagram-api-feed ${{ secrets.DOCKER_USERNAME }}/udagram-api-feed:v1
           docker tag udagram-api-user ${{ secrets.DOCKER_USERNAME }}/udagram-api-user:v1
-          docker tag udagram-frontend ${{ secrets.DOCKER_USERNAME }}/udagram-frontend:v1
+          docker tag udagram-frontend:local ${{ secrets.DOCKER_USERNAME }}/udagram-frontend:v1
           docker tag reverseproxy ${{ secrets.DOCKER_USERNAME }}/reverseproxy:v1
 
       - name: Login to DockerHub
