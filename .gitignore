@@ -13,6 +13,7 @@ log.txt
 npm-debug.log*
 
 .idea/
+.set_env.sh
 .ionic/
 .sourcemaps/
 .sass-cache/
@@ -40,3 +41,4 @@ venv/
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
+set_env.sh
