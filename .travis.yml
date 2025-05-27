@@ -11,7 +11,7 @@ script:
 - docker tag udagram-frontend sudkul/udagram-frontend:v1
 - docker tag reverseproxy sudkul/reverseproxy:v1
 
-#Push Images to Dockerhub
+#Push Images to Dockerhub /
 - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 - docker-compose -f docker-compose-build.yaml push
 - docker logout
