@@ -1,6 +1,10 @@
+language: generic
+
+script:
+
 #Build Images
 - docker-compose -f docker-compose-build.yaml up -d --build
-´
+
 #Tag Images
 - docker tag udagram-api-feed sudkul/udagram-api-feed:v1
 - docker tag udagram-api-user sudkul/udagram-api-user:v1
