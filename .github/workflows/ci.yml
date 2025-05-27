@@ -1,0 +1,47 @@
+name: Build and Push Docker Images
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Images
+        run: |
+          docker-compose -f docker-compose-build.yaml up -d --build
+
+      - name: Tag Images
+        if: github.event_name == 'push'
+        run: |
+          docker tag udagram-api-feed ${{ secrets.DOCKER_USERNAME }}/udagram-api-feed:v1
+          docker tag udagram-api-user ${{ secrets.DOCKER_USERNAME }}/udagram-api-user:v1
+          docker tag udagram-frontend ${{ secrets.DOCKER_USERNAME }}/udagram-frontend:v1
+          docker tag reverseproxy ${{ secrets.DOCKER_USERNAME }}/reverseproxy:v1
+
+      - name: Login to DockerHub
+        if: github.event_name == 'push'
+        run: |
+          echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+      - name: Push Images to DockerHub
+        if: github.event_name == 'push'
+        run: |
+          docker push ${{ secrets.DOCKER_USERNAME }}/udagram-api-feed:v1
+          docker push ${{ secrets.DOCKER_USERNAME }}/udagram-api-user:v1
+          docker push ${{ secrets.DOCKER_USERNAME }}/udagram-frontend:v1
+          docker push ${{ secrets.DOCKER_USERNAME }}/reverseproxy:v1
+
+      - name: Logout from DockerHub
+        if: always()
+        run: docker logout
